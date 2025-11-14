@@ -30,7 +30,7 @@ const verifyFirebaseToken = async (req, res, next) => {
 
   try {
     const decoded = await admin.auth().verifyIdToken(token)
-    console.log('inside token', decoded)
+    // console.log('inside token', decoded)
     req.token_email = decoded.email;
 
     next()
@@ -63,7 +63,7 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     const db = client.db("eLearning_db")
     const courseCollection = db.collection("courses")
@@ -73,7 +73,7 @@ async function run() {
     // user api's here
     app.post('/users', async (req, res) => {
         const newUser = req.body;
-        console.log(newUser)
+        // console.log(newUser)
         const email = req.body.email;
         const query = { email: email }
         const existingUser = await usersCollection.findOne(query);
@@ -173,7 +173,7 @@ async function run() {
 
     //create new course
     app.post('/courses', verifyFirebaseToken, async (req, res) => {
-      console.log('headers in the post', req.headers)
+      // console.log('headers in the post', req.headers)
         const newCourse = req.body;
         
         const result = await courseCollection.insertOne(newCourse);
