@@ -121,6 +121,39 @@ async function run() {
       const result = await enrollsCollection.deleteOne(enrollData)
       res.send(result)
     })
+    app.patch('/courses/:id', async (req, res) => {
+        const id = req.params.id;
+        const updatedCourse = req.body;
+        const query = { _id: new ObjectId(id) }
+        const update = {
+            $set: {
+                title: updatedCourse.title,
+                image: updatedCourse.image,
+                price: updatedCourse.price,
+                duration: updatedCourse.duration,
+                category: updatedCourse.category,
+                description: updatedCourse.description,
+                isFeatured: updatedCourse.isFeatured,
+                instructor_id: updatedCourse.instructor_id,
+                instructor_name: updatedCourse.instructor_name,
+                email: updatedCourse.email,
+                photo: updatedCourse.photo,
+                difficulty_level: updatedCourse.difficulty_level,
+                rating: updatedCourse.rating,
+                students: updatedCourse.students
+            }
+        }
+
+        const result = await courseCollection.updateOne(query, update)
+        res.send(result)
+    })
+
+    app.delete('/enroll/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) }
+        const result = await enrollsCollection.deleteOne(query);
+        res.send(result);
+    })
 
     //get my enrolled courses
     app.get('/my-enrolls', verifyFirebaseToken, async (req, res) => {
