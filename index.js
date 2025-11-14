@@ -86,6 +86,7 @@ async function run() {
             res.send(result);
         }
     })
+    
     //Courses API here
     //get all courses
     app.get('/courses', async (req, res) => {
@@ -171,6 +172,7 @@ async function run() {
         res.send(result)
     })
 
+    //course related api here
     //create new course
     app.post('/courses', verifyFirebaseToken, async (req, res) => {
       // console.log('headers in the post', req.headers)
