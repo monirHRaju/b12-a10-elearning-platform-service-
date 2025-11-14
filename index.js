@@ -16,7 +16,7 @@ admin.initializeApp({
 });
 
 
-//middleware
+//middleware here
 app.use(cors())
 app.use(express.json())
 const verifyFirebaseToken = async (req, res, next) => {
@@ -42,7 +42,7 @@ const verifyFirebaseToken = async (req, res, next) => {
 }
 
 
-
+//home api
 app.get('/', (req, res) => {
     res.send('Smart server is running')
 })
