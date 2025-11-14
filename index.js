@@ -108,10 +108,17 @@ async function run() {
         res.send(result)
     })
 
-    //my enrolled courses
+    //enroll a course and insert in database
     app.post("/enroll", async (req, res)=> {
       const enrollData = req.body
       const result = await enrollsCollection.insertOne(enrollData)
+      res.send(result)
+    })
+    
+    //my enrolled delete
+    app.delete("/enroll/:id", async (req, res)=> {
+      const deleteEnrollData = req.body
+      const result = await enrollsCollection.deleteOne(enrollData)
       res.send(result)
     })
 
