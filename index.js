@@ -5,11 +5,16 @@ const cors = require('cors')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const port = process.env.PORT || 3000
+
+//firebase admin sdk initialization
 const admin = require("firebase-admin");
 
+// works in localhost
+const serviceAccount = require("./firebaseServicekey.json");
 
-const decoded = Buffer.from(process.env.FIREBASE_SERVICE_KEY, "base64").toString("utf8");
-const serviceAccount = JSON.parse(decoded);
+// works in vercel deployment
+// const decoded = Buffer.from(process.env.FIREBASE_SERVICE_KEY, "base64").toString("utf8");
+// const serviceAccount = JSON.parse(decoded);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -62,7 +67,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-    // await client.db("admin").command({ ping: 1 });
+    await client.db("admin").command({ ping: 1 });
     // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     const db = client.db("eLearning_db")
@@ -187,7 +192,7 @@ async function run() {
     //get featured course
     app.get('/featured-courses', async (req, res) => {
         // const projectData = {_id: 1, title: 1, duration: 1, category: 1, image: 1, price: 1, isFeatured: 1} 
-        const cursor = courseCollection.find({isFeatured: true}).limit(6)
+        const cursor = courseCollection.find({isFeatured: true}).limit(8)
         const result = await cursor.toArray()
 
         res.send(result)
